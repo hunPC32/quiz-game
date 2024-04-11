@@ -8,7 +8,7 @@ from label import *
 
 pygame.init()
 pygame.mixer.init()
-screen = pygame.display.set_mode((1500, 600))
+screen = pygame.display.set_mode((1200, 600))
 clock = pygame.time.Clock()
 pygame.display.set_caption("Quizjáték")
 
@@ -19,7 +19,7 @@ buttons = pygame.sprite.Group()
 class Button(pygame.sprite.Sprite):
     usedA = []
     usedB = []
-
+    
     def __init__(self, position, text, size,
         colors="white on blue",
         hover_colors="red on green",
@@ -114,7 +114,6 @@ class Button(pygame.sprite.Sprite):
 
         if self.rect.collidepoint(pygame.mouse.get_pos()):
             if pygame.mouse.get_pressed()[0] and self.pressed == 1:
-                print("The answer is:'" + self.text + "'")
                 self.command()
                 self.pressed = 0
 
@@ -149,13 +148,13 @@ def check_score(answered="wrong"):
         qnum += 1
         score.change_text("1. játékos pontjai: " + str(onepoints))
 
-        
         question = random.randint(0, len(questions))
+
+        Button.usedA.append(question)
+
         while question in Button.usedA:
             question = random.randint(0, len(questions))
-        Button.usedA.append(question)
-        print(Button.usedA)
-       
+
         title.change_text(questions[question-1][0], color="cyan")
 
         num_question.change_text(str(qnum) + ". kérdés")
@@ -184,10 +183,11 @@ def check_score(answered="wrong"):
         score.change_text("2. játékos pontjai: " + str(twopoints))
 
         question = random.randint(0, len(questions))
+
+        Button.usedB.append(question)
+
         while question in Button.usedB:
             question = random.randint(0, len(questions))
-        Button.usedB.append(question)
-        print(Button.usedB)
 
         title.change_text(questions[question-1][0], color="cyan")
 
@@ -222,7 +222,7 @@ questions = [
   ["Melyik bolygó a Naprendszerünk legnagyobb bolygója?", ["Jupiter", "Mars", "Merkúr", "Szaturnusz"]],
   ["Ki írta a „Rómeó és Júlia” című drámát?", ["William Shakespeare", "Charles Dickens", "Jane Austen", "Fyodor Dostoyevsky"]],
   ["Melyik város az Egyesült Királyság fővárosa?", ["London", "Párizs", "Berlin", "Madrid"]],
-  ["Melyik állat a legnagyobb a Földön?", ["Kék bálna", "Elefánt", "Tigris", "Zsiráf"]],
+  ["Melyik állat a legnagyobb a Földön?", ["Geryx", "Elefánt", "Tigris", "Zsiráf"]],
   ["Melyik évben köszöntötték be az első ember a Holdon?", ["1969", "1959", "1979", "1989"]],
   ["Melyik a világ legnagyobb óceánja?", ["Csendes-óceán", "Atlanti-óceán", "Indiai-óceán", "Északi-sarki-óceán"]],
   ["Melyik városban található a Louvre múzeum?", ["Párizs", "London", "Róma", "Madrid"]],
@@ -238,7 +238,7 @@ questions = [
   ["Melyik a legnagyobb sziget a világon?", ["Grönland", "Ausztrália", "Madagaszkár", "Új-Zéland"]],
   ["Melyik évben alakult az ENSZ (Egyesült Nemzetek Szervezete)?", ["1945", "1919", "1939", "1955"]],
   ["Ki írta a „Háború és béke” című regényt?", ["Leo Tolstoy", "Fyodor Dostoyevsky", "Victor Hugo", "Ernest Hemingway"]],
-  ["Melyik a legnagyobb szárazföldi ragadozó?", ["Elefánt", "Tigris", "Grizzly medve", "Jegesmedve"]],
+  ["Melyik a legnagyobb szárazföldi állat?", ["Geryx", "Tigris", "Grizzli medve", "Jegesmedve"]],
   ["Melyik város az Egyesült Államok fővárosa?", ["Washington, D.C.", "New York", "Los Angeles", "Chicago"]],
   ["Ki festette a „Csillagos éjszakát” című festményt?", ["Vincent van Gogh", "Pablo Picasso", "Leonardo da Vinci", "Claude Monet"]],
   ["Melyik az egyik legnagyobb kutyafajta?", ["Német juhász", "Beagle", "Mopsz", "Dán dog"]],
@@ -249,7 +249,7 @@ questions = [
   ["Ki volt az első nő, aki megkapta a Nobel-békedíjat?", ["Jane Addams", "Marie Curie", "Mother Teresa", "Malala Yousafzai"]],
   ["Melyik a legnagyobb repülőterek közül?", ["Heathrow Airport, London", "Hartsfield-Jackson Airport, Atlanta", "Beijing Capital Airport, Peking", "Dubai International Airport"]],
   ["Ki volt Amerika függetlenségi nyilatkozatának fő szerzője?", ["Thomas Jefferson", "George Washington", "Benjamin Franklin", "John Adams"]],
-  ["Melyik állat a legnagyobb szárazföldi emlős?", ["Elefánt", "Tigris", "Zsiráf", "Orrszarvú"]],
+  ["Melyik állat a legnagyobb szárazföldi emlős?", ["Geryx", "Tigris", "Zsiráf", "Orrszarvú"]],
 ]
 
 
