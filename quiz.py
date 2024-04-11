@@ -8,7 +8,7 @@ from label import *
 
 pygame.init()
 pygame.mixer.init()
-screen = pygame.display.set_mode((1500, 1000))
+screen = pygame.display.set_mode((1500, 600))
 clock = pygame.time.Clock()
 pygame.display.set_caption("Quizjáték")
 
@@ -17,8 +17,9 @@ pygame.display.set_caption("Quizjáték")
 
 buttons = pygame.sprite.Group()
 class Button(pygame.sprite.Sprite):
+    usedA = []
+    usedB = []
 
-    
     def __init__(self, position, text, size,
         colors="white on blue",
         hover_colors="red on green",
@@ -148,7 +149,13 @@ def check_score(answered="wrong"):
         qnum += 1
         score.change_text("1. játékos pontjai: " + str(onepoints))
 
+        
         question = random.randint(0, len(questions))
+        while question in Button.usedA:
+            question = random.randint(0, len(questions))
+        Button.usedA.append(question)
+        print(Button.usedA)
+       
         title.change_text(questions[question-1][0], color="cyan")
 
         num_question.change_text(str(qnum) + ". kérdés")
@@ -177,6 +184,11 @@ def check_score(answered="wrong"):
         score.change_text("2. játékos pontjai: " + str(twopoints))
 
         question = random.randint(0, len(questions))
+        while question in Button.usedB:
+            question = random.randint(0, len(questions))
+        Button.usedB.append(question)
+        print(Button.usedB)
+
         title.change_text(questions[question-1][0], color="cyan")
 
         num_question.change_text(str(qnum-1) + ". kérdés")
